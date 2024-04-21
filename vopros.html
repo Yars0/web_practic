@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обратная связь</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-image: url('aaa.jpg'); 
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        h1 {
+            color: #fff;
+        }
+        form {
+            display: inline-block;
+            text-align: left;
+            background-color: #fff;
+            border: 1px solid #000;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .register-button {
+            position: absolute; /* Добавлено */
+            top: 0; /* Добавлено */
+            left: 0; /* Добавлено */
+            text-decoration: none;
+            background-color: #ccc;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 20px; /* Добавлено отступ */
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="register-button">Назад</a> <!-- Перенесено в начало body -->
+
+    <h1>Форма обратной связи</h1>
+    <form action="/feedback" method="POST">
+        <label for="name">Имя:</label><br>
+        <input type="text" id="name" name="name" required><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br>
+        <label for="message">Сообщение:</label><br>
+        <textarea id="message" name="message" required></textarea><br>
+        <button type="submit">Отправить</button>
+    </form>
+</body>
+</html>

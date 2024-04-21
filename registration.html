@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация команды</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-image: url('aaa.jpg'); /* Путь к изображению заднего фона */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        h1 {
+            color: #fff;
+        }
+        form {
+            display: inline-block;
+            text-align: left;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .register-button {
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            text-decoration: none;
+            background-color: #ccc;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 20px; 
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+     <!-- Ссылка на страницу обратной связи -->
+     <a href="index.html" class="register-button">Назад</a>
+
+    <h1>Регистрация команды</h1>
+    
+    <!-- Форма регистрации команды -->
+    <form id="registrationForm">
+        <label for="teamName">Название команды:</label>
+        <input type="text" id="teamName" name="teamName" required maxlength="20"><br>
+
+        <label for="teamBanner">Баннер команды (URL изображения):</label>
+        <input type="text" id="teamBanner" name="teamBanner" required><br>
+
+        <label for="teamDescription">Описание команды:</label>
+        <textarea id="teamDescription" name="teamDescription" rows="4" required></textarea><br>
+
+        <label for="teamCase">Кейс команды:</label>
+        <input type="text" id="teamCase" name="teamCase" required maxlength="255"><br>
+
+        <label for="teamLogin">Логин:</label>
+        <input type="text" id="teamLogin" name="teamLogin" required maxlength="255"><br>
+
+        <label for="teamMail">Email:</label>
+        <input type="email" id="teamMail" name="teamMail" required maxlength="255"><br>
+
+        <label for="teamPassword">Пароль:</label>
+        <input type="password" id="teamPassword" name="teamPassword" required minlength="6" maxlength="256"><br>
+        <button type="submit" class="btn btn-primary mt-3">Зарегистрировать команду</button>
+        <!--button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+            Добавить участника
+        </button> -->
+        <div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="addMemberModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+         <!--       <form id="addMemberForm">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="addMemberModalLabel">Добавить участника</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <input type="hidden" id="memberId" name="memberId">
+                    <div class="mb-3">
+                      <label for="memberName" class="form-label">ФИО</label>
+                      <input type="text" class="form-control" id="memberName" name="memberName" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="memberPhoto" class="form-label">Фото</label>
+                      <input type="text" class="form-control" id="memberPhoto" name="memberPhoto" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="memberInterests" class="form-label">Интересы</label>
+                      <textarea class="form-control" id="memberInterests" name="memberInterests" rows="3" required></textarea>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Добавить</button>
+                  </div>
+                </form> -->
+              </div>
+            </div>
+
+        
+    </form>
+    <script>
+      // Функция для создания карточки команды
+      function createParticipantCard(participant) {
+          const card = document.createElement('div');
+          card.className = 'participant-card';
+    
+          const teamBanner = document.createElement('img');
+          teamBanner.src = participant.teamBanner;
+          card.appendChild(teamBanner);
+    
+          const teamName = document.createElement('p');
+          teamName.textContent = `Название: ${participant.teamName}`;
+          card.appendChild(teamName);
+    
+          const teamCase = document.createElement('p');
+          teamCase.textContent = `Кейс: ${participant.teamCase}`;
+          card.appendChild(teamCase);
+    
+          const teamDescription = document.createElement('p');
+          teamDescription.textContent = `Описание: ${participant.teamDescription}`;
+          card.appendChild(teamDescription);
+    
+          return card;
+      }
+    
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const participantData = {
+            teamName: formData.get('teamName'),
+            teamBanner: formData.get('teamBanner'),
+            teamDescription: formData.get('teamDescription'),
+            teamCase: formData.get('teamCase'),
+            teamLogin: formData.get('teamLogin'),
+            teamMail: formData.get('teamMail'),
+            teamPassword: formData.get('teamPassword')
+        };
+
+        // Получаем данные участников из Local Storage
+        const participantsData = JSON.parse(localStorage.getItem('participants')) || [];
+        participantsData.push(participantData);
+
+        // Сохраняем данные участников в Local Storage
+        localStorage.setItem('participants', JSON.stringify(participantsData));
+
+        alert('Участник зарегистрирован успешно!');
+        window.location.href = 'index.html'; // Перенаправляем на страницу index после регистрации
+    });
+</script>
+
+
+    
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="title-word">Редактирование участников</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-image: url('aaa.jpg'); /* Путь к изображению заднего фона */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        h1 {
+            color: #faf8f8;
+        }
+        .title-word{
+            color: #fff;
+        }
+        .participant-card {
+            display: inline-block;
+            width: 200px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .participant-card img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .register-button {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        .register-button:hover {
+            background-color: #0056b3;
+        }
+        .delete-button {
+            color: #fff;
+            background-color: #dc3545;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        .back-button {
+            position: absolute; 
+            top: 0; 
+            left: 0;
+            text-decoration: none;
+            background-color: #ccc;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 20px; 
+        }
+        form {
+            display: inline-block;
+            text-align: left;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .register-button {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #00eaff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        .register-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <a href="account.html" class="back-button">Назад</a> 
+
+    <h1>Редактирование участников</h1>
+
+    <form id="participant-form">
+        <label for="name">Имя:</label><br>
+        <input type="text" id="name" required><br><br>
+
+        <label for="age">Возраст:</label><br>
+        <input type="number" id="age" required><br><br>
+
+        <label for="photo">Ссылка на фото:</label><br>
+        <input type="url" id="photo" required><br><br>
+
+        <label for="lang">Языки программирования:</label><br>
+        <input type="text" id="lang" required><br><br>
+
+        <button class="register-button" type="submit" id="save-button">Сохранить</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('participant-form');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const photo = document.getElementById('photo').value;
+            const lang = document.getElementById('lang').value;
+
+            const participant = { name, age, photo, lang };
+
+            // Получаем данные участников из localStorage
+            let participantsData = JSON.parse(localStorage.getItem('participantsV2')) || [];
+
+            // Находим индекс существующего участника (если есть)
+            const index = participantsData.findIndex(p => p.name === name);
+
+            if (index !== -1) {
+                // Если участник с таким именем найден, обновляем данные
+                participantsData[index] = participant;
+            } else {
+                // Иначе добавляем нового участника в список
+                participantsData.push(participant);
+            }
+
+            // Сохраняем обновленный список участников в localStorage
+            localStorage.setItem('participantsV2', JSON.stringify(participantsData));
+
+            // Переходим обратно на страницу личного кабинета (account.html)
+            window.location.href = 'account.html';
+        });
+    </script>
+</body>
+</html>

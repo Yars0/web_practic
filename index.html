@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добро пожаловать!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.min.js"></script>
+    
+    <style>
+        .carousel-item {
+            transition: transform 0.6s ease;
+        }
+
+        .carousel-item.active {
+            transform: scale(1.2); 
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-image: url('aaa.jpg'); /* Путь к изображению заднего фона */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            /* Дополнительные стили для фона */
+        }
+        h1 {
+            color: #fff;
+        }
+        .participant-card {
+    display: inline-block;
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    position: relative;
+    overflow: hidden; /* Скрыть лишнюю часть изображения */
+}
+
+        .participant-card img {
+    width: 100%;
+    height: 150px; /* Задаем фиксированную высоту изображения */
+    object-fit: cover; /* Заполнить контейнер, сохраняя пропорции */
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+        .register-button1 {
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            text-decoration: none;
+            background-color: #ccc;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 20px; 
+        }
+
+        .register-button {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        .register-button:hover {
+            background-color: #0056b3;
+        }
+        .delete-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    
+    <a href="lk.html" class="register-button1" data-bs-toggle="modal" data-bs-target="#loginModal">ЛК</a>
+    
+    <!-- Модальное окно для авторизации -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="loginForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loginModalLabel">Авторизация</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="login">Логин:</label>
+                        <input type="text" id="login" name="login" required><br>
+
+                        <label for="password">Пароль:</label>
+                        <input type="password" id="password" name="password" required><br>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary">Войти</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <h1>Добро пожаловать на Хакатон!</h1>
+    
+    <div id="participants-container" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <!-- Карточки участников будут добавляться здесь динамически -->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#participants-container" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#participants-container" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    
+
+    <!-- Ссылка на страницу регистрации -->
+    <a href="registration.html" class="register-button">Зарегистрироваться</a>
+    
+    <!-- Ссылка на страницу обратной связи -->
+    <a href="vopros.html" class="register-button">Обратная связь</a>
+
+    <script>
+        // Функция для создания карточки команды
+        function createParticipantCard(participant, index) {
+            const card = document.createElement('div');
+            card.className = 'participant-card';
+
+            const teamBanner = document.createElement('img');
+            teamBanner.src = participant.teamBanner;
+            card.appendChild(teamBanner);
+
+            const teamName = document.createElement('p');
+            teamName.textContent = `Название: ${participant.teamName}`;
+            card.appendChild(teamName);
+
+            const teamCase = document.createElement('p');
+            teamCase.textContent = `Кейс: ${participant.teamCase}`;
+            card.appendChild(teamCase);
+
+            const teamDescription = document.createElement('p');
+            teamDescription.textContent = `Описание: ${participant.teamDescription}`;
+            card.appendChild(teamDescription);
+
+            // Кнопка для удаления команды
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'x';
+            deleteButton.className = 'delete-button';
+            deleteButton.onclick = function() {
+                // Удаляем команду из массива данных
+                participantsData.splice(index, 1);
+                // Перерисовываем карточки участников
+                renderParticipants();
+                // Сохраняем обновленные данные в localStorage
+                saveParticipants();
+            };
+            card.appendChild(deleteButton);
+
+            return card;
+        }
+
+        // Получаем данные участников из localStorage
+        let participantsData = JSON.parse(localStorage.getItem('participants')) || [];
+
+        // Добавляем карточки участников на страницу
+        const participantsContainer = document.getElementById('participants-container');
+        
+        function renderParticipants() {
+            participantsContainer.innerHTML = ''; // Очищаем содержимое контейнера
+
+            participantsData.forEach((participant, index) => {
+                const card = createParticipantCard(participant, index);
+                participantsContainer.appendChild(card);
+            });
+        }
+
+        renderParticipants(); // Вызываем при загрузке страницы
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const login = document.getElementById('login').value;
+            const password = document.getElementById('password').value;
+
+            const participant = participantsData.find(participant => participant.teamLogin === login && participant.teamPassword === password);
+
+            if (participant) {
+                alert('Авторизация успешна! Добро пожаловать!');
+                window.location.href = 'account.html';
+            } else {
+                alert('Неверный логин или пароль. Попробуйте снова.');
+            }
+        });
+
+        // Функция для сохранения данных участников в localStorage
+        function saveParticipants() {
+            localStorage.setItem('participants', JSON.stringify(participantsData));
+        }
+    </script>
+
+    <script>
+   function renderParticipants() {
+    const carouselInner = document.querySelector('.carousel-inner');
+    carouselInner.innerHTML = ''; // Очищаем содержимое карусели
+
+    participantsData.forEach((participant, index) => {
+        const card = createParticipantCard(participant, index);
+        
+        const carouselItem = document.createElement('div');
+        carouselItem.className = 'carousel-item';
+        if (index === 0) {
+            carouselItem.classList.add('active'); // Первый элемент делаем активным
+        }
+        carouselItem.appendChild(card);
+        
+        carouselInner.appendChild(carouselItem);
+    });
+}
+
+// Инициализация карусели после загрузки страницы
+document.addEventListener('DOMContentLoaded', function() {
+    const participantsCarousel = new bootstrap.Carousel(document.querySelector('#participants-container'), {
+        interval: false // Отключаем автоматическое переключение
+    });
+    
+    renderParticipants(); // Добавляем карточки при загрузке страницы
+});
+    </script>
+</body>
+</html>

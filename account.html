@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-image: url('aaa.jpg'); /* Путь к изображению заднего фона */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        h1 {
+            color: #333;
+        }
+        .participant-card {
+            display: inline-block;
+            width: 200px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .participant-card img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .register-button {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        .register-button:hover {
+            background-color: #0056b3;
+        }
+        .delete-button {
+            color: #fff;
+            background-color: #dc3545;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        .back-button {
+            position: absolute; /* Добавлено */
+            top: 0; /* Добавлено */
+            left: 0; /* Добавлено */
+            text-decoration: none;
+            background-color: #ccc;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 20px; /* Добавлено отступ */
+        }
+        h1{
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Личный кабинет</h1>
+    
+    <a href="index.html" class="back-button">Назад</a> 
+
+    <!-- Контейнер для карточек участников -->
+    <div id="participants-container">
+        <!-- Здесь будут добавляться карточки участников динамически -->
+    </div>
+
+    <!-- Ссылка на страницу редактирования -->
+    <a href="redakt.html" class="register-button" id="edit-button">Редактировать</a>
+
+    <script>
+        // Функция для создания карточки участника
+        function createParticipantCard(participant, index) {
+            const card = document.createElement('div');
+            card.className = 'participant-card';
+
+            const photo = document.createElement('img');
+            photo.src = participant.photo;
+            card.appendChild(photo);
+
+            const name = document.createElement('p');
+            name.textContent = `Имя: ${participant.name}`;
+            card.appendChild(name);
+
+            const age = document.createElement('p');
+            age.textContent = `Возраст: ${participant.age}`;
+            card.appendChild(age);
+
+            const lang = document.createElement('p');
+            lang.textContent = `Языки программирования: ${participant.lang}`;
+            card.appendChild(lang);
+
+            // Кнопка для удаления участника
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Удалить';
+            deleteButton.className = 'delete-button';
+            deleteButton.onclick = function() {
+                // Удаляем участника из массива данных
+                participantsData.splice(index, 1);
+                // Перерисовываем карточки участников
+                renderParticipants();
+                // Сохраняем обновленные данные в localStorage
+                saveParticipants();
+            };
+            card.appendChild(deleteButton);
+
+            return card;
+        }
+
+        // Функция для открытия страницы редактирования
+        function openRegistrationPage() {
+            window.location.href = 'redakt.html';
+        }
+
+        // Получаем данные участников из localStorage
+        let participantsData = JSON.parse(localStorage.getItem('participantsV2')) || [];
+
+        // Добавляем карточки участников на страницу
+        const participantsContainer = document.getElementById('participants-container');
+
+        function renderParticipants() {
+            participantsContainer.innerHTML = ''; // Очищаем содержимое контейнера
+
+            participantsData.forEach((participant, index) => {
+                const card = createParticipantCard(participant, index);
+                participantsContainer.appendChild(card);
+            });
+        }
+
+        renderParticipants(); // Вызываем при загрузке страницы
+
+        // Обработчик клика по кнопке "Редактировать"
+        const editButton = document.getElementById('edit-button');
+        editButton.addEventListener('click', openRegistrationPage);
+
+        // Функция для сохранения данных участников в localStorage
+        function saveParticipants() {
+            localStorage.setItem('participantsV2', JSON.stringify(participantsData));
+        }
+
+        // Сохраняем данные участников перед закрытием страницы (не обязательно)
+        window.addEventListener('beforeunload', saveParticipants);
+
+        // Если нужно, обновлять данные из localStorage при загрузке страницы (не обязательно)
+        // participantsData = JSON.parse(localStorage.getItem('participants')) || [];
+    </script>
+</body>
+</html>
